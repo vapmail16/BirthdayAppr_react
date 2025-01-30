@@ -1,0 +1,325 @@
+.settings-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.settings-section {
+    background-color: var(--box-background);
+    border-radius: 12px;
+    padding: 10px 0;
+    margin-bottom: 20px;
+    flex: 1;
+}
+
+.settings-section h2 {
+    color: var(--text-color);
+    font-size: 20px;
+    margin: 0 0 20px 0;
+    font-weight: 600;
+}
+
+.settings-group {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.setting-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    margin-bottom: 15px;
+}
+
+.setting-item label {
+    color: var(--text-color);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.setting-item select {
+    padding: 6px 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 14px;
+    color: var(--text-color);
+    background-color: white;
+    min-width: 200px;
+}
+
+.switch-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.backup-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.backup-btn,
+.restore-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.backup-btn {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.restore-btn {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+}
+
+.backup-btn:hover,
+.restore-btn:hover {
+    transform: translateY(-1px);
+}
+
+.settings-actions {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.status-message {
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.status-message.success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.status-message.error {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.settings-modal {
+    background-color: var(--box-background);
+    border-radius: 15px;
+    padding: 30px;
+    width: 600px;
+    min-height: 400px;
+    max-height: 90vh;
+    position: relative;
+    margin: 0 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.settings-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 25px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
+}
+
+.tab-btn {
+    padding: 12px 25px;
+    background: none;
+    border: none;
+    color: var(--text-color);
+    cursor: pointer;
+    font-size: 16px;
+    border-bottom: 2px solid transparent;
+}
+
+.tab-btn.active {
+    color: var(--primary-color);
+    border-bottom-color: var(--primary-color);
+    font-weight: 600;
+}
+
+.tab-btn:hover {
+    color: var(--primary-color);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.modal-header h2 {
+    margin: 0;
+    color: var(--text-color);
+    font-size: 24px;
+    font-weight: 500;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: var(--text-color);
+    cursor: pointer;
+    padding: 5px;
+}
+
+.settings-icon {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: var(--text-color);
+    font-size: 24px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.settings-icon:hover {
+    transform: rotate(45deg);
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 25px;
+    padding-top: 15px;
+    border-top: 1px solid var(--border-color);
+}
+
+.save-btn,
+.cancel-btn {
+    padding: 10px 25px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: 'Quicksand', sans-serif;
+    transition: all 0.2s ease;
+    color: var(--text-color);
+}
+
+.save-btn {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.save-btn:hover {
+    background-color: var(--accent-color);
+    transform: translateY(-1px);
+    color: white;
+}
+
+.cancel-btn {
+    background-color: #f0f0f0;
+    color: var(--text-color);
+}
+
+.cancel-btn:hover {
+    background-color: #e0e0e0;
+    transform: translateY(-1px);
+}
+
+.settings-section h3 {
+    color: var(--text-color);
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 15px;
+}
+
+/* Make scrollbar less obtrusive */
+.settings-modal::-webkit-scrollbar {
+    width: 8px;
+}
+
+.settings-modal::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.settings-modal::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+}
+
+.save-status {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 15px 25px;
+    border-radius: 12px;
+    background-color: #F4B183;
+    color: white;
+    font-size: 16px;
+    animation: fadeIn 0.3s ease;
+    z-index: 1000;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.reminder-days {
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.reminder-days select {
+    padding: 8px 15px;
+    border: 2px solid #FFE0B2;
+    border-radius: 10px;
+    font-size: 16px;
+    color: #666666;
+    background-color: white;
+}
+
+.settings-modal select {
+    padding: 10px 15px;
+    width: 250px;
+    font-size: 16px;
+}
+
+.notification-toggle {
+    background-color: var(--notification-background);
+    padding: 15px 25px;
+    border-radius: 15px;
+    margin: 30px 0;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Style inputs and selects */
+.setting-item select,
+.setting-item input {
+    background-color: var(--input-background);
+    border: 2px solid var(--border-color);
+    color: var(--text-color);
+} 

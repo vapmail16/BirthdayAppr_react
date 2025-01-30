@@ -1,0 +1,22 @@
+.tabs {
+    display: flex;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.tab-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    background-color: #FFF5EB;  /* Light peachy background */
+    color: #333333;  /* Dark text */
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.tab-btn:hover,
+.tab-btn.active {
+    background-color: #FFB347;  /* Baby orange */
+    color: #333333;  /* Keep text dark even on hover */
+} 

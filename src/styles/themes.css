@@ -1,0 +1,253 @@
+:root {
+    /* Default theme (Baby Orange) */
+    --primary-color: #F4B183;
+    --background-color: #FFF5EB;
+    --text-color: #666666;
+    --border-color: #FFE0B2;
+    --secondary-color: #FFE4C4;
+    --accent-color: #FFA07A;
+}
+
+/* Baby Orange Theme */
+[data-theme="babyOrange"] {
+    --primary-color: #F4B183;
+    --background-color: #FFF5EB;
+    --text-color: #666666;
+    --border-color: #FFE0B2;
+    --secondary-color: #FFE4C4;
+    --accent-color: #FFA07A;
+    --box-background: white;
+    --input-background: white;
+    --notification-background: #FFF5EB;
+    --button-background: #F4B183;
+    --button-hover: #FFA07A;
+    --tab-active: #F4B183;
+    --card-background: #FFF9F2;
+    --month-title-color: #F4B183;
+}
+
+/* Baby Pink Theme */
+[data-theme="babyPink"] {
+    --primary-color: #FFC0CB;
+    --background-color: #FFF0F5;
+    --text-color: #DB7093;
+    --border-color: #FFB6C1;
+    --secondary-color: #FFE4E1;
+    --accent-color: #FF69B4;
+    --box-background: white;
+    --input-background: white;
+    --notification-background: #FFF0F5;
+    --button-background: #FFC0CB;
+    --button-hover: #FFB6C1;
+    --tab-active: #FFC0CB;
+    --card-background: #FFF5F8;
+    --month-title-color: #FFC0CB;
+    --relationship-tag-bg: #FFC0CB;
+    --icon-color: #DB7093;
+    --switch-active: #FFC0CB;
+    --modal-border: #FFB6C1;
+    --select-hover: #FFF0F5;
+    --checkbox-bg: #FFC0CB;
+}
+
+/* Dark Theme */
+[data-theme="dark"] {
+    --primary-color: #2C3E50;
+    --background-color: #34495E;
+    --text-color: #ECF0F1;
+    --border-color: #4A6278;
+    --secondary-color: #465C71;
+    --accent-color: #3498DB;
+    --box-background: #2C3E50;
+    --input-background: #34495E;
+    --notification-background: #2C3E50;
+    --button-background: #3498DB;
+    --button-hover: #2980B9;
+    --tab-active: #3498DB;
+}
+
+/* Apply theme colors to specific elements */
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+.white-container {
+    background-color: var(--box-background, white);
+    border: 1px solid var(--border-color);
+}
+
+.settings-icon {
+    color: var(--primary-color);
+}
+
+h1, h2, h3 {
+    color: var(--primary-color);
+}
+
+.tab-btn {
+    background-color: transparent;
+    color: var(--text-color);
+    border: none;
+    padding: 12px 25px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.tab-btn:hover {
+    background-color: var(--tab-hover, var(--hover-background));
+}
+
+.tab-btn.active {
+    background-color: var(--button-background);
+    color: white;
+    border-bottom: 2px solid var(--button-background);
+}
+
+.contact-card {
+    background-color: var(--box-background, white);
+    border: 1px solid var(--border-color);
+}
+
+.relationship-tag {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.modal-btn.confirm-btn {
+    background-color: var(--primary-color);
+}
+
+.modal-btn.cancel-btn {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+.action-btn {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.notification-toggle {
+    background-color: var(--notification-background, var(--background-color));
+}
+
+.settings-modal {
+    background-color: var(--box-background, white);
+}
+
+.settings-section {
+    background-color: var(--box-background, white);
+}
+
+input, select, textarea {
+    background-color: var(--input-background, white) !important;
+}
+
+/* Update the component styles */
+.save-btn {
+    background-color: var(--button-background, var(--primary-color)) !important;
+    color: white;
+}
+
+.save-btn:hover {
+    background-color: var(--button-hover, var(--accent-color)) !important;
+}
+
+.backup-btn {
+    background-color: var(--button-background, var(--primary-color));
+}
+
+.backup-btn:hover {
+    background-color: var(--button-hover, var(--accent-color));
+}
+
+.tab-btn.active {
+    color: var(--text-color);
+    border-bottom-color: var(--tab-active, var(--primary-color));
+}
+
+/* Add styles for the settings modal buttons */
+.settings-modal .modal-footer .save-btn {
+    background-color: var(--button-background);
+    color: white;
+}
+
+.settings-modal .modal-footer .save-btn:hover {
+    background-color: var(--button-hover);
+}
+
+.settings-modal .backup-btn {
+    background-color: var(--button-background);
+    color: white;
+}
+
+.settings-modal .backup-btn:hover {
+    background-color: var(--button-hover);
+}
+
+.settings-modal .tab-btn.active {
+    color: var(--text-color);
+    border-bottom-color: var(--tab-active);
+}
+
+/* Update the tab button hover styles */
+.tab-btn:hover {
+    background-color: var(--hover-background);
+    color: var(--text-color);
+}
+
+.tab-btn.active:hover {
+    background-color: var(--button-background);
+    color: white;
+}
+
+/* Update other hover states */
+.settings-modal .tab-btn:hover {
+    background-color: var(--hover-background);
+    color: var(--text-color);
+    border-bottom-color: var(--border-color);
+}
+
+.settings-modal .tab-btn.active:hover {
+    background-color: var(--button-background);
+    color: var(--text-color);
+    border-bottom-color: var(--tab-active);
+}
+
+/* Add specific styles for the settings modal */
+.settings-modal .tab-btn {
+    background-color: transparent;
+}
+
+.settings-modal .tab-btn.active {
+    background-color: var(--button-background);
+    color: white;
+}
+
+.settings-modal .save-btn,
+.settings-modal .backup-btn,
+.settings-modal .action-btn {
+    background-color: var(--button-background);
+    color: white;
+}
+
+.settings-modal .save-btn:hover,
+.settings-modal .backup-btn:hover,
+.settings-modal .action-btn:hover {
+    background-color: var(--button-hover);
+}
+
+/* Override any default button colors */
+button.save-btn,
+button.backup-btn,
+button.action-btn {
+    background-color: var(--button-background) !important;
+    color: white !important;
+}
+
+button.save-btn:hover,
+button.backup-btn:hover,
+button.action-btn:hover {
+    background-color: var(--button-hover) !important;
+} 

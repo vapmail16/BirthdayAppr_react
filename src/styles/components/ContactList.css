@@ -1,0 +1,376 @@
+.contacts-container {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.controls {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.search-input,
+.filter-select,
+.sort-select {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.search-input {
+    flex: 2;
+}
+
+.filter-select,
+.sort-select {
+    flex: 1;
+}
+
+.contacts-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.contact-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+.contact-info h3 {
+    margin: 0 0 5px 0;
+    color: var(--text-color);
+}
+
+.contact-info p {
+    margin: 3px 0;
+    color: #666;
+}
+
+.contact-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.edit-btn,
+.delete-btn {
+    background: none;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.edit-btn {
+    color: var(--primary-color);
+}
+
+.delete-btn {
+    color: #dc3545;
+}
+
+.edit-btn:hover {
+    background-color: rgba(255, 179, 71, 0.1);
+}
+
+.delete-btn:hover {
+    background-color: rgba(220, 53, 69, 0.1);
+}
+
+.contact-checkbox {
+    margin-right: 15px;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-top: 20px;
+    padding: 10px;
+}
+
+.pagination button {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+}
+
+.pagination button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.pagination span {
+    color: var(--text-color);
+}
+
+.contacts-list-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.contacts-controls {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.search-input {
+    flex: 2;
+    padding: 12px 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    font-size: 15px;
+    font-family: 'Quicksand', sans-serif;
+    color: var(--text-color);
+}
+
+.filter-select,
+.sort-select {
+    flex: 1;
+    padding: 12px 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    font-size: 15px;
+    font-family: 'Quicksand', sans-serif;
+    color: var(--text-color);
+    background-color: white;
+    cursor: pointer;
+}
+
+.contacts-grid {
+    display: grid;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.contact-card {
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 20px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.contact-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.contact-info h3 {
+    margin: 0 0 10px 0;
+    color: var(--text-color);
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.contact-info p {
+    margin: 5px 0;
+    color: var(--text-color);
+    font-size: 15px;
+}
+
+.relationship-tag {
+    display: inline-block;
+    padding: 4px 12px;
+    background-color: var(--secondary-color);
+    border-radius: 20px;
+    font-size: 14px;
+    color: var(--text-color);
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.pagination-btn {
+    padding: 10px 20px;
+    background-color: var(--secondary-color);
+    border: none;
+    border-radius: 8px;
+    color: var(--text-color);
+    font-family: 'Quicksand', sans-serif;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.pagination-btn:hover:not(:disabled) {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.pagination-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.page-info {
+    color: var(--text-color);
+    font-size: 15px;
+}
+
+.no-contacts {
+    text-align: center;
+    padding: 40px;
+    color: var(--text-color);
+    font-size: 16px;
+}
+
+.loading,
+.error-message {
+    text-align: center;
+    padding: 20px;
+    color: var(--text-color);
+    font-size: 16px;
+}
+
+.contacts-actions {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.action-btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    font-family: 'Quicksand', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.action-btn:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.action-btn.delete {
+    background-color: #ffebee;
+    color: #dc3545;
+}
+
+.action-btn.delete:hover {
+    background-color: #dc3545;
+    color: white;
+}
+
+.contact-details {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin: 10px 0;
+}
+
+.contact-details p {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-color);
+    font-size: 14px;
+}
+
+.contact-details i {
+    color: var(--primary-color);
+    width: 16px;
+}
+
+.age {
+    color: var(--text-color);
+    opacity: 0.8;
+    margin-left: 5px;
+}
+
+.notes {
+    margin-top: 10px;
+    font-style: italic;
+    color: var(--text-color);
+    opacity: 0.8;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.notes i {
+    color: var(--primary-color);
+    margin-top: 3px;
+}
+
+.contacts-by-month {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.month-group {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.month-title {
+    color: var(--primary-color);
+    font-size: 24px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.contacts-grid {
+    display: grid;
+    gap: 15px;
+}
+
+.contact-card {
+    background: #FFF5EB;
+    border-radius: 12px;
+    padding: 15px;
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    transition: transform 0.2s ease;
+}
+
+.contact-card:hover {
+    transform: translateY(-2px);
+}
+
+.contact-info h3 {
+    color: #333333;
+    margin: 0 0 5px 0;
+}
+
+.contact-details {
+    margin: 10px 0;
+}
+
+.relationship-tag {
+    display: inline-block;
+    padding: 4px 12px;
+    background: var(--primary-color);
+    color: white;
+    border-radius: 20px;
+    font-size: 12px;
+    margin-top: 5px;
+} 
