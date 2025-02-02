@@ -17,4 +17,17 @@ ReactDOM.render(
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
-); 
+);
+
+if (process.env.NODE_ENV === 'production') {
+  console.log = () => {};
+  console.error = () => {};
+  console.debug = () => {};
+}
+
+window.addEventListener('error', function(e) {
+  if (process.env.NODE_ENV === 'production') {
+    // You can add error reporting service here
+    console.error('Global error:', e);
+  }
+}); 
