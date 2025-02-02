@@ -842,11 +842,41 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     function switchTab(tabId) {
-        UI.tabContents.forEach(content => content.classList.remove('active'));
-        UI.tabs.forEach(tab => tab.classList.remove('active'));
-        document.getElementById(tabId).classList.add('active');
-        document.querySelector(`[data-tab="${tabId}"]`).classList.add('active');
+        // Remove active class from all tabs and contents
+        UI.tabContents.forEach(content => {
+            content.classList.remove('active');
+        });
+        
+        UI.tabs.forEach(tab => {
+            tab.classList.remove('active');
+        });
+        
+        // Add active class to selected tab and content
+        const selectedContent = document.getElementById(tabId);
+        const selectedTab = document.querySelector(`[data-tab="${tabId}"]`);
+        
+        if (selectedContent) {
+            selectedContent.classList.add('active');
+        }
+        
+        if (selectedTab) {
+            selectedTab.classList.add('active');
+        }
+        
+        // If switching to calendar tab, refresh the calendar
+        if (tabId === 'calendar') {
+            CalendarManager.updateCalendar();
+        }
     }
+
+    // Add click handlers for tabs
+    UI.tabs.forEach(tab => {
+        tab.addEventListener('click', (e) => {
+            e.preventDefault();
+            const tabId = tab.getAttribute('data-tab');
+            switchTab(tabId);
+        });
+    });
 
     function setupModalHandlers() {
         // Delete modal handlers
@@ -1079,34 +1109,28 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         
         // Form submission handler
-        UI.form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            console.log('Form submitted'); // Debug log
-            UI.status.textContent = 'Saving contact...';
-
-            try {
-                const formData = ContactManager.getFormData();
-                console.log('Form data:', formData); // Debug log
+        if (UI.form) {
+            UI.form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                console.log('Form submitted');
                 
-                await ContactManager.saveContact(formData);
-                console.log('Contact saved successfully'); // Debug log
-                
-                UI.status.textContent = 'Contact saved successfully!';
-                UI.form.reset();
-                
-                // Refresh contacts list
-                await ContactManager.displayContacts();
-                
-                // Clear status after 3 seconds
-                setTimeout(() => {
-                    UI.status.textContent = '';
-                }, 3000);
-
-            } catch (error) {
-                console.error('Error saving contact:', error);
-                UI.status.textContent = `Error: ${error.message}`;
-            }
-        });
+                try {
+                    const formData = ContactManager.getFormData();
+                    await ContactManager.saveContact(formData);
+                    
+                    StatusManager.show('Contact added successfully!');
+                    UI.form.reset();
+                    
+                    // Optionally switch to the contacts view after adding
+                    switchTab('view');
+                    await ContactManager.displayContacts();
+                    
+                } catch (error) {
+                    console.error('Error saving contact:', error);
+                    StatusManager.showError('Error saving contact: ' + error.message);
+                }
+            });
+        }
         
         // Export button handler
         document.getElementById('exportBtn').addEventListener('click', () => {
@@ -1134,77 +1158,77 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Initialize everything
-    initializeEventListeners();
-    
-    // Initialize calendar
-    CalendarManager.init();
-    
-    // Display initial contacts
-    ContactManager.displayContacts();
-    
-    // Initialize notifications
-    if ('Notification' in window) {
-        ContactManager.requestNotificationPermission();
-    }
-
-    // Check for birthdays every hour
-    setInterval(() => {
-        ContactManager.checkUpcomingBirthdays();
-    }, 3600000); // 1 hour in milliseconds
-
-    // Add tab click handlers
-    UI.tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-            const tabId = tab.getAttribute('data-tab');
-            switchTab(tabId);
-        });
-    });
-
-    // Settings modal handlers - moved after UI initialization
-    if (UI.settingsBtn) {
-        UI.settingsBtn.addEventListener('click', () => {
-            UI.settingsModal.classList.add('show');
-        });
-    }
-
-    // Use cancelSettings instead of closeSettings
-    if (UI.cancelSettings) {
-        UI.cancelSettings.addEventListener('click', () => {
-            UI.settingsModal.classList.remove('show');
-        });
-    } else {
-        console.warn("Settings cancel button not found");
-    }
-
-    // Close settings modal when clicking outside
-    UI.settingsModal.addEventListener('click', (event) => {
-        if (event.target === UI.settingsModal) {
-            UI.settingsModal.classList.remove('show');
+    function initializeApp() {
+        initializeEventListeners();
+        
+        // Set Calendar as the default active tab
+        switchTab('calendar');
+        
+        // Initialize calendar
+        CalendarManager.init();
+        
+        // Display initial contacts
+        ContactManager.displayContacts();
+        
+        // Initialize notifications
+        if ('Notification' in window) {
+            ContactManager.requestNotificationPermission();
         }
-    });
+        
+        // Check for birthdays every hour
+        setInterval(() => {
+            ContactManager.checkUpcomingBirthdays();
+        }, 3600000); // 1 hour in milliseconds
 
-    // Settings tab functionality
-    if (UI.settingsTabs.length === 0 || UI.settingsSections.length === 0) {
-        console.warn('Settings tabs or sections not found');
-    } else {
-        UI.settingsTabs.forEach((tab, index) => {
-            console.log(`Initializing tab ${index}:`, tab.getAttribute('data-section'));
-            tab.addEventListener('click', () => {
-                console.log('Tab clicked:', tab.getAttribute('data-section'));
-                UI.settingsTabs.forEach(t => t.classList.remove('active'));
-                UI.settingsSections.forEach(s => s.classList.remove('active'));
-                
-                tab.classList.add('active');
-                const sectionId = tab.getAttribute('data-section');
-                console.log('Looking for section:', sectionId);
-                const section = document.getElementById(sectionId);
-                if (section) {
-                    console.log('Found section, activating');
-                    section.classList.add('active');
-                } else {
-                    console.warn(`Section with id '${sectionId}' not found`);
-                }
+        // Settings modal handlers - moved after UI initialization
+        if (UI.settingsBtn) {
+            UI.settingsBtn.addEventListener('click', () => {
+                UI.settingsModal.classList.add('show');
             });
+        }
+
+        // Use cancelSettings instead of closeSettings
+        if (UI.cancelSettings) {
+            UI.cancelSettings.addEventListener('click', () => {
+                UI.settingsModal.classList.remove('show');
+            });
+        } else {
+            console.warn("Settings cancel button not found");
+        }
+
+        // Close settings modal when clicking outside
+        UI.settingsModal.addEventListener('click', (event) => {
+            if (event.target === UI.settingsModal) {
+                UI.settingsModal.classList.remove('show');
+            }
         });
+
+        // Settings tab functionality
+        if (UI.settingsTabs.length === 0 || UI.settingsSections.length === 0) {
+            console.warn('Settings tabs or sections not found');
+        } else {
+            UI.settingsTabs.forEach((tab, index) => {
+                console.log(`Initializing tab ${index}:`, tab.getAttribute('data-section'));
+                tab.addEventListener('click', () => {
+                    console.log('Tab clicked:', tab.getAttribute('data-section'));
+                    UI.settingsTabs.forEach(t => t.classList.remove('active'));
+                    UI.settingsSections.forEach(s => s.classList.remove('active'));
+                    
+                    tab.classList.add('active');
+                    const sectionId = tab.getAttribute('data-section');
+                    console.log('Looking for section:', sectionId);
+                    const section = document.getElementById(sectionId);
+                    if (section) {
+                        console.log('Found section, activating');
+                        section.classList.add('active');
+                    } else {
+                        console.warn(`Section with id '${sectionId}' not found`);
+                    }
+                });
+            });
+        }
     }
+
+    // Call initializeApp when DOM is loaded
+    initializeApp();
 }); 

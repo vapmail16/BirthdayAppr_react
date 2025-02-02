@@ -1,0 +1,116 @@
+.contacts-container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.contact-card {
+    background: var(--card-background);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+}
+
+.contact-card:hover {
+    transform: translateY(-2px);
+}
+
+.contact-info {
+    flex-grow: 1;
+}
+
+.contact-info h3 {
+    color: var(--text-color);
+    margin: 0 0 10px 0;
+    font-size: 1.2em;
+}
+
+.contact-info p {
+    color: var(--text-color);
+    margin: 5px 0;
+    font-size: 0.9em;
+}
+
+.contact-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.delete-btn {
+    background: none;
+    border: none;
+    color: #ff4444;
+    cursor: pointer;
+    padding: 5px;
+    font-size: 1.2em;
+    transition: all 0.2s ease;
+}
+
+.delete-btn:hover {
+    color: #ff0000;
+    transform: scale(1.1);
+}
+
+.error-message {
+    color: #ff4444;
+    text-align: center;
+    padding: 10px;
+    margin: 10px 0;
+    background: rgba(255, 68, 68, 0.1);
+    border-radius: 8px;
+}
+
+.no-contacts {
+    text-align: center;
+    color: var(--text-color);
+    padding: 40px;
+    font-size: 1.2em;
+}
+
+/* Loading state */
+.loading {
+    text-align: center;
+    color: var(--text-color);
+    padding: 20px;
+}
+
+/* Controls section */
+.controls {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.search-input {
+    padding: 8px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    flex-grow: 1;
+}
+
+.filter-select {
+    padding: 8px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--background-color);
+    color: var(--text-color);
+}
+
+/* Bulk actions */
+.bulk-actions {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+} 

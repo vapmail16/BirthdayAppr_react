@@ -174,20 +174,20 @@ input:checked + .slider:before {
     white-space: nowrap;  /* Prevent text wrapping */
 }
 
+/* Update the first-child styling to target Calendar tab */
+.tab-btn:first-child {
+    background-color: #F4B183;  /* Always orange */
+    color: #333333;
+}
+
 /* Active and hover state */
 .tab-btn:first-child,
 .tab-btn.active,
 .tab-btn:hover {
-    background-color: #F4B183;  /* Match the new orange */
+    background-color: #F4B183;
     color: #333333;
-    transform: translateY(-2px);  /* Slight lift effect */
-    box-shadow: 0 4px 10px rgba(244, 164, 96, 0.2);  /* Subtle shadow */
-}
-
-/* First tab (Add Contact) styling */
-.tab-btn:first-child {
-    background-color: #F4B183;  /* Always orange */
-    color: #333333;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(244, 164, 96, 0.2);
 }
 
 /* Status Messages */

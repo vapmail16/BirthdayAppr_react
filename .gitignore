@@ -1,8 +1,14 @@
 node_modules
 .env
 .env.local
+.env.development
+.env.test
+.env.production
 build
 .DS_Store
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Apple private key
+AuthKey_*.p8

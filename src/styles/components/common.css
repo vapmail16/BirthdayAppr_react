@@ -197,17 +197,19 @@ p, span, label {
 
 /* Settings icon positioning */
 .settings-icon {
-    position: absolute;
-    top: 20px;
-    right: 20px;
     cursor: pointer;
     color: var(--text-color);
     font-size: 1.5em;
     transition: transform 0.2s ease;
+    position: static;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .settings-icon:hover {
     transform: rotate(45deg);
+    color: var(--primary-color);
 }
 
 /* Update switch size */
@@ -423,4 +425,107 @@ input[type="checkbox"]:checked {
 .settings-modal .tab-btn.active {
     background-color: var(--button-background);
     color: white;
+}
+
+.tab-content {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.tab-content.active {
+    display: block;
+    opacity: 1;
+}
+
+/* Add specific styles for the form container */
+#add.tab-content.active {
+    display: block;
+    opacity: 1;
+    padding: 20px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Style the form elements */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid var(--border-color);
+    border-radius: 10px;
+    font-size: 16px;
+    color: var(--text-color);
+}
+
+.form-group textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+/* Submit button styling */
+button[type="submit"] {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: var(--hover-color);
+}
+
+/* Add these styles */
+.top-icons {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.icon-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-color);
+    font-size: 1.5em;
+    padding: 5px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logout-btn:hover {
+    color: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+/* Add to your existing styles */
+.admin-btn {
+    color: var(--text-color);
+}
+
+.admin-btn:hover {
+    color: var(--primary-color);
+    transform: translateY(-2px);
 } 

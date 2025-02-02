@@ -6,15 +6,24 @@ const Navigation = () => {
     const { t } = useTranslation();
 
     return (
-        <nav className="nav-container">
-            <NavLink to="/" className={({ isActive }) => `nav-btn ${isActive ? 'active' : ''}`}>
-                {t('addContact')}
+        <nav className="tabs">
+            <NavLink 
+                to="/" 
+                className={({ isActive }) => `tab-btn ${isActive ? 'active' : ''}`}
+            >
+                {t('calendar')}
             </NavLink>
-            <NavLink to="/contacts" className={({ isActive }) => `nav-btn ${isActive ? 'active' : ''}`}>
+            <NavLink 
+                to="/contacts" 
+                className={({ isActive }) => `tab-btn ${isActive ? 'active' : ''}`}
+            >
                 {t('viewContacts')}
             </NavLink>
-            <NavLink to="/calendar" className={({ isActive }) => `nav-btn ${isActive ? 'active' : ''}`}>
-                {t('calendar')}
+            <NavLink 
+                to="/add" 
+                className={({ isActive }) => `tab-btn ${isActive ? 'active' : ''}`}
+            >
+                {t('addContact')}
             </NavLink>
         </nav>
     );

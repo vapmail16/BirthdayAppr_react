@@ -10,6 +10,23 @@
     <link rel="stylesheet" href="styles.css?v=4">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="icon" type="image/png" href="assets/favicon.png">
+    
+    <!-- Apple Sign-In Meta Tags -->
+    <meta name="apple-itunes-app" content="app-id=YOUR_APP_ID">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    
+    <!-- Apple Sign-In Configuration -->
+    <script type="application/json" id="apple-sign-in-config">
+    {
+        "clientId": "YOUR_SERVICE_ID",
+        "scope": "name email",
+        "redirectURI": "https://your-app.firebaseapp.com/__/auth/handler",
+        "state": "firebase",
+        "nonce": "random-nonce",
+        "usePopup": true
+    }
+    </script>
 </head>
 <body>
     <div class="container">
@@ -33,13 +50,69 @@
 
         <!-- Add tab buttons -->
         <div class="tabs">
-            <button class="tab-btn active" data-tab="add" data-translate="addContact">Add Contact</button>
+            <button class="tab-btn active" data-tab="calendar">Calendar</button>
             <button class="tab-btn" data-tab="view" data-translate="viewContacts">View Contacts</button>
-            <button class="tab-btn" data-tab="calendar">Calendar</button>
+            <button class="tab-btn" data-tab="add" data-translate="addContact">Add Contact</button>
+        </div>
+
+        <!-- Calendar View -->
+        <div class="tab-content active" id="calendar">
+            <div class="calendar-header">
+                <button class="nav-btn">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <h2 class="calendar-month">February 2025</h2>
+                <button class="nav-btn">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+            <div class="calendar-container">
+                <div class="calendar-weekdays">
+                    <div>Sun</div>
+                    <div>Mon</div>
+                    <div>Tue</div>
+                    <div>Wed</div>
+                    <div>Thu</div>
+                    <div>Fri</div>
+                    <div>Sat</div>
+                </div>
+                <div class="calendar-grid" id="calendarDays"></div>
+            </div>
+        </div>
+
+        <!-- View Contacts -->
+        <div class="tab-content" id="view">
+            <div class="dashboard-controls">
+                <input type="text" id="searchContacts" data-translate-placeholder="searchContacts">
+                <select id="filterRelationship">
+                    <option value="" data-translate="allRelationships">All Relationships</option>
+                    <option value="family" data-translate="family">Family</option>
+                    <option value="friend" data-translate="friend">Friend</option>
+                    <option value="colleague" data-translate="colleague">Colleague</option>
+                    <option value="other" data-translate="other">Other</option>
+                </select>
+                <select id="sortBy">
+                    <option value="birthday" data-translate="sortByBirthday">Sort by Birthday</option>
+                    <option value="name" data-translate="sortByName">Sort by Name</option>
+                    <option value="date" data-translate="sortByDate">Sort by Date Added</option>
+                </select>
+                <button id="importBtn" class="btn-secondary" data-translate="importContacts">
+                    <i class="fas fa-upload"></i> <span data-translate="importContacts">Import Contacts</span>
+                </button>
+                <button id="exportBtn" class="btn-secondary" data-translate="exportContacts">
+                    <i class="fas fa-download"></i> <span data-translate="exportContacts">Export Contacts</span>
+                </button>
+            </div>
+            <div id="contactsList"></div>
+            <div class="pagination-controls">
+                <button id="prevPage" class="pagination-btn" disabled>Previous</button>
+                <span id="pageInfo">Page 1</span>
+                <button id="nextPage" class="pagination-btn">Next</button>
+            </div>
         </div>
 
         <!-- Add Contact Form -->
-        <div class="tab-content active" id="add">
+        <div class="tab-content" id="add">
             <form id="userForm">
                 <div class="form-group">
                     <label for="name" data-translate="fullName">Full Name:</label>
@@ -88,62 +161,6 @@
                 </div>
                 <button type="submit">Add Contact</button>
             </form>
-        </div>
-
-        <!-- Contacts Dashboard -->
-        <div class="tab-content" id="view">
-            <div class="dashboard-controls">
-                <input type="text" id="searchContacts" data-translate-placeholder="searchContacts">
-                <select id="filterRelationship">
-                    <option value="" data-translate="allRelationships">All Relationships</option>
-                    <option value="family" data-translate="family">Family</option>
-                    <option value="friend" data-translate="friend">Friend</option>
-                    <option value="colleague" data-translate="colleague">Colleague</option>
-                    <option value="other" data-translate="other">Other</option>
-                </select>
-                <select id="sortBy">
-                    <option value="birthday" data-translate="sortByBirthday">Sort by Birthday</option>
-                    <option value="name" data-translate="sortByName">Sort by Name</option>
-                    <option value="date" data-translate="sortByDate">Sort by Date Added</option>
-                </select>
-                <button id="importBtn" class="btn-secondary" data-translate="importContacts">
-                    <i class="fas fa-upload"></i> <span data-translate="importContacts">Import Contacts</span>
-                </button>
-                <button id="exportBtn" class="btn-secondary" data-translate="exportContacts">
-                    <i class="fas fa-download"></i> <span data-translate="exportContacts">Export Contacts</span>
-                </button>
-            </div>
-            <div id="contactsList"></div>
-            <div class="pagination-controls">
-                <button id="prevPage" class="pagination-btn" disabled>Previous</button>
-                <span id="pageInfo">Page 1</span>
-                <button id="nextPage" class="pagination-btn">Next</button>
-            </div>
-        </div>
-
-        <!-- Calendar View -->
-        <div class="tab-content" id="calendar">
-            <div class="calendar-header">
-                <button class="nav-btn">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                <h2 class="calendar-month">January 2025</h2>
-                <button class="nav-btn">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
-            </div>
-            <div class="calendar-container">
-                <div class="calendar-weekdays">
-                    <div>Sun</div>
-                    <div>Mon</div>
-                    <div>Tue</div>
-                    <div>Wed</div>
-                    <div>Thu</div>
-                    <div>Fri</div>
-                    <div>Sat</div>
-                </div>
-                <div class="calendar-grid" id="calendarDays"></div>
-            </div>
         </div>
 
     <!-- Delete Modal - Move this here -->

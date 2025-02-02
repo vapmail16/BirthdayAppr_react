@@ -4,12 +4,16 @@ import { collection, query, getDocs, orderBy, deleteDoc, doc, updateDoc, addDoc 
 import EditContactModal from './EditContactModal';
 import Modal from '../common/Modal';
 import { useTranslation } from 'react-i18next';
+import { ContactManager } from '../../utils/ContactManager';
+import './ContactList.css';
+import { useLocation } from 'react-router-dom';
+import { useUser } from '../../contexts/UserContext';
 
 const ContactList = () => {
     const { t } = useTranslation();
     const [contacts, setContacts] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState('');
+    const [error, setError] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
     const [filterRelationship, setFilterRelationship] = useState('');
     const [sortBy, setSortBy] = useState('name');
@@ -21,33 +25,47 @@ const ContactList = () => {
     const [deleteId, setDeleteId] = useState(null);
     const [showSuccessModal, setShowSuccessModal] = useState(false);
     const [successMessage, setSuccessMessage] = useState('');
+    const location = useLocation();
+    const { userRole } = useUser();
 
-    // Fetch contacts
     useEffect(() => {
-        fetchContacts();
-    }, [sortBy]);
+        console.log('Location state changed:', location.state); // Debug log
+        if (location.state?.refresh) {
+            loadContacts();
+        }
+    }, [location.state]);
 
-    const fetchContacts = async () => {
+    useEffect(() => {
+        loadContacts();
+    }, []); // Initial load
+
+    const loadContacts = async () => {
         try {
-            const q = query(
-                collection(db, 'contacts'),
-                orderBy(sortBy === 'dateOfBirth' ? 'dateOfBirth' : sortBy)
-            );
-            const querySnapshot = await getDocs(q);
-            const contactsList = querySnapshot.docs.map(doc => ({
-                id: doc.id,
-                ...doc.data()
-            }));
-            setContacts(contactsList);
-            setError('');
-            console.log('Fetched contacts:', contactsList); // Debug log
+            setLoading(true);
+            setError(null);
+            console.log('Fetching contacts... User role:', userRole);
+            const fetchedContacts = await ContactManager.getContacts();
+            console.log('Raw fetched contacts:', fetchedContacts);
+
+            if (Array.isArray(fetchedContacts)) {
+                setContacts(fetchedContacts);
+                console.log('Contacts set in state:', fetchedContacts.length);
+            } else {
+                console.error('Invalid contacts data:', fetchedContacts);
+                setError(t('invalidContactsData'));
+            }
         } catch (err) {
-            console.error('Error fetching contacts:', err);
-            setError('Failed to load contacts');
+            console.error('Error loading contacts:', err);
+            setError(`${t('failedToLoadContacts')}: ${err.message}`);
         } finally {
             setLoading(false);
         }
     };
+
+    // Add this effect to monitor contacts state changes
+    useEffect(() => {
+        console.log('Contacts state updated:', contacts);
+    }, [contacts]);
 
     // Filter and sort contacts
     const filteredContacts = contacts.filter(contact => {
@@ -82,21 +100,17 @@ const ContactList = () => {
     };
 
     // Delete contact(s)
-    const handleDelete = async (id) => {
-        setDeleteId(id);
-        setShowDeleteModal(true);
-    };
-
-    const confirmDelete = async () => {
+    const handleDelete = async (contactId) => {
         try {
-            await deleteDoc(doc(db, 'contacts', deleteId));
-            setContacts(contacts.filter(contact => contact.id !== deleteId));
-            setShowDeleteModal(false);
-            setSuccessMessage('Contact deleted successfully!');
+            setError(null);
+            await ContactManager.deleteContact(contactId);
+            // Update local state after successful deletion
+            setContacts(prevContacts => prevContacts.filter(contact => contact.id !== contactId));
+            setSuccessMessage(t('contactDeletedSuccess'));
             setShowSuccessModal(true);
-        } catch (err) {
-            console.error('Error deleting contact:', err);
-            setError('Failed to delete contact');
+        } catch (error) {
+            console.error('Error deleting contact:', error);
+            setError(t('failedToDeleteContact'));
         }
     };
 
@@ -107,17 +121,18 @@ const ContactList = () => {
 
     const confirmBulkDelete = async () => {
         try {
-            await Promise.all(
-                selectedContacts.map(id => deleteDoc(doc(db, 'contacts', id)))
+            setError(null);
+            await Promise.all(selectedContacts.map(id => ContactManager.deleteContact(id)));
+            setContacts(prevContacts => 
+                prevContacts.filter(contact => !selectedContacts.includes(contact.id))
             );
-            setContacts(contacts.filter(contact => !selectedContacts.includes(contact.id)));
             setSelectedContacts([]);
             setShowDeleteModal(false);
-            setSuccessMessage(`${selectedContacts.length} contacts deleted successfully!`);
+            setSuccessMessage(t('bulkDeleteSuccess', { count: selectedContacts.length }));
             setShowSuccessModal(true);
         } catch (err) {
             console.error('Error deleting contacts:', err);
-            setError('Failed to delete contacts');
+            setError(t('failedToDeleteContacts'));
         }
     };
 
@@ -274,7 +289,7 @@ const ContactList = () => {
                         });
                     }
                     
-                    fetchContacts();
+                    loadContacts();
                     setError('');
                     event.target.value = ''; // Reset file input
                     handleImportSuccess(validContacts.length);
@@ -663,7 +678,7 @@ const ContactList = () => {
             <Modal
                 isOpen={showDeleteModal}
                 onClose={() => setShowDeleteModal(false)}
-                onConfirm={deleteId === 'bulk' ? confirmBulkDelete : confirmDelete}
+                onConfirm={deleteId === 'bulk' ? confirmBulkDelete : handleDelete}
                 title={t('confirmDeleteTitle')}
                 message={deleteId === 'bulk' 
                     ? `Are you sure you want to delete ${selectedContacts.length} contacts?`
